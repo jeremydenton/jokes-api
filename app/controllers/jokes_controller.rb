@@ -1,5 +1,5 @@
-class JokesController < ApplicationController
-  before_action :set_joke, only: [:show, :update, :destroy]
+class JokesController < OpenReadController
+  before_action :set_joke, only: [:update, :destroy]
 
   # GET /jokes
   def index
@@ -10,7 +10,7 @@ class JokesController < ApplicationController
 
   # GET /jokes/1
   def show
-    render json: @joke
+    render json: Joke.find(params[:id])
   end
 
   # POST /jokes
@@ -46,6 +46,6 @@ class JokesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def joke_params
-      params.require(:joke).permit(:set_up, :punch_line)
+      params.require(:joke).permit(:set_up, :punch_line, :user_id)
     end
 end
